@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.public')
 @section('title', 'Profil Jurusan — DTIF FTEIC ITS')
 @section('content')
 

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.public')
 @section('title', 'Beranda — ITS Academic Portal')
 @section('content')
 

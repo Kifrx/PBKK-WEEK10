@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.public')
 @section('title', 'Kalkulator IPK Akademis — ITS')
 @section('content')
 

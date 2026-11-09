@@ -2,19 +2,20 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Tests\TestCase;
 
 class Pertemuan4Test extends TestCase
 {
     /**
-     * Test route / returns 200 and master layout elements.
+     * Test the portal entry redirects guests to login.
      */
     public function test_home_route_is_successful(): void
     {
-        $response = $this->get('/');
-        $response->assertStatus(200);
-        $response->assertSee('Departemen Teknik Informatika ITS');
-        $response->assertSee('Portal Profil');
+        $this->get('/')->assertRedirect(route('login'));
+        $this->get('/beranda')->assertRedirect(route('login'));
+        $this->get('/home')->assertRedirect(route('login'));
+        $this->get('/dashboard')->assertRedirect(route('login'));
     }
 
     /**
@@ -22,7 +23,7 @@ class Pertemuan4Test extends TestCase
      */
     public function test_profil_mahasiswa_route_is_successful(): void
     {
-        $response = $this->get('/profil-mahasiswa');
+        $response = $this->actingAs(User::factory()->make(['role' => 'mahasiswa']))->get('/profil-mahasiswa');
         $response->assertStatus(200);
         $response->assertSee('Syah Amin Zikri');
         $response->assertSee('5025241197');
@@ -35,7 +36,7 @@ class Pertemuan4Test extends TestCase
      */
     public function test_ide_agent_route_is_successful(): void
     {
-        $response = $this->get('/ide-agent');
+        $response = $this->actingAs(User::factory()->make(['role' => 'mahasiswa']))->get('/ide-agent');
         $response->assertStatus(200);
         $response->assertSee('theme-light');
         $response->assertSee('Career Application Agent');
@@ -46,7 +47,7 @@ class Pertemuan4Test extends TestCase
      */
     public function test_ide_agent_dark_mode_challenge(): void
     {
-        $response = $this->get('/ide-agent?mode=dark');
+        $response = $this->actingAs(User::factory()->make(['role' => 'mahasiswa']))->get('/ide-agent?mode=dark');
         $response->assertStatus(200);
         $response->assertSee('theme-dark');
         $response->assertSee('Mode Normal');
@@ -58,7 +59,7 @@ class Pertemuan4Test extends TestCase
      */
     public function test_beranda_user_greeting_challenge(): void
     {
-        $response = $this->get('/beranda?user=Andi');
+        $response = $this->actingAs(User::factory()->make(['role' => 'mahasiswa']))->get('/beranda?user=Andi');
         $response->assertStatus(200);
         $response->assertSee('Selamat datang,');
         $response->assertSee('Andi');
@@ -79,7 +80,7 @@ class Pertemuan4Test extends TestCase
      */
     public function test_existing_routes_are_preserved(): void
     {
-        $this->get('/mahasiswa/5025241197')->assertStatus(200);
+        $this->actingAs(User::factory()->make(['role' => 'mahasiswa']))->get('/mahasiswa/5025241197')->assertStatus(200);
         $this->get('/agent')->assertStatus(200);
         $this->get('/hitung-ipk/3.8/3.9')->assertStatus(200);
     }

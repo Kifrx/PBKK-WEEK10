@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.public')
 @section('title', 'Platform Agentic AI — Syah Amin Zikri')
 @section('content')
 
